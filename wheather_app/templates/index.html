@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Прогноз Погоды</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+    <h1>Погода в городе</h1>
+    <form method="post">
+        {% csrf_token %}
+        <input type="text" name="city" placeholder="Введите город" required>
+        <button type="submit">Получить погоду</button>
+    </form>
+
+    {% if weather_data %}
+    <div class="weather-card">
+        <h2>Прогноз погоды :</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Время</th>
+                    <th>Температура (°C)</th>
+                    <th>Влажность (%)</th>
+                    <th>Ощущается как (°C)</th>
+                    <th>Вероятность осадков (%)</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for hour, temp, humidity, apparent, probability in weather_data %}
+                <tr>
+                    <td>{{ hour }}</td>
+                    <td>{{ temp }}</td>
+                    <td>{{ humidity }} %</td>
+                    <td>{{ apparent }}</td>
+                    <td>{{ probability }} %</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% endif %}
+
+    <div class="auth-links">
+          <p>Добро пожаловать, {{ user.username }}!</p>
+          <form method="post" action="{% url 'logout' %}">
+          {% csrf_token %}
+          <button type="submit">Выйти</button>
+          </form>
+    </div>
+</body>
+</html>

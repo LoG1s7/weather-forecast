@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Вход</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/login_style.css' %}">
+</head>
+<body>
+    <div>
+        <h2>Вход</h2>
+        <form method="post">
+            {% csrf_token %}
+            <label for="username">Имя пользователя:</label>
+            <input type="text" name="username" id="username" required>
+            <label for="password">Пароль:</label>
+            <input type="password" name="password" id="password" required>
+            <button type="submit">Войти</button>
+        </form>
+        {% if next %}
+            <p>Вы будете перенаправлены обратно на страницу после успешного входа.</p>
+        {% endif %}
+    </div>
+</body>
+</html>
